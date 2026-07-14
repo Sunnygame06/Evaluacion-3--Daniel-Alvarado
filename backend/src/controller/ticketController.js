@@ -41,3 +41,51 @@ ticketController.insertTickets = async (req, res) => {
         return res.status(500).json({message: "Internal Server Error"})
     }
 }
+
+//UPDATE
+ticketController.updateTicket = async (req, res) => {
+    try{
+        let{
+            quantity,
+            purchaseDate,
+            total,
+            paymentStatus,
+            TransactionId
+        } = req.body;
+
+        const ticketUpdated = await ticketModel.findByIdAndUpdate(req.params.id, {
+            quantity,
+            purchaseDate,
+            total,
+            paymentStatus,
+            TransactionId
+        }, {new: true},);
+
+        if(!ticketUpdated){
+            return res.status(404).json({message: "Ticket not found"})
+        }
+
+        return res.status(200).json({message: "Ticket Actualizado"})
+    }catch (error){
+        console.log("error" +error)
+        return res.status(500).json({message: "Internal Server Error"})
+    }
+}
+
+//DELETE
+ticketController.deleteTicket = async (req, res) => {
+    try {
+        const Deletedticket = await ticketModel.findByIdAndDelete(req.params.id)
+
+        if(!Deletedticket){
+            return status(404).json({message: "Ticket not found"})
+        }
+
+        return res.status(200).json({message: "Ticket Eliminado"})
+    } catch (error) {
+        console.log("error" +error)
+        return res.status(500).json({message: "Internal Server Error"})
+    }
+}
+
+export default ticketController
