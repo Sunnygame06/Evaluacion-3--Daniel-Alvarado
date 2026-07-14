@@ -93,7 +93,7 @@ registerAdminController.verifyCode = async(req, res) => {
         } = decoded
 
         if(code !== storedCode){
-            return res.status(400)-json({message: "The code doesn't match"})
+            return res.status(400).json({message: "The code doesn't match"})
         }
 
         const newAdmin = adminModel({

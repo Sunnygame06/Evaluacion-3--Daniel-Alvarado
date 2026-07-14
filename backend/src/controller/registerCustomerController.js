@@ -65,9 +65,6 @@ registerCustomerController.register = async(req, res) => {
             }
             return res.status(200).json({message: "Email sent"})
         })
-
-        return res.status(200).json({message: "Email sent"})
-
     } catch (error) {
         console.log("error"+error)
         return res.status(500).json({message: "Internal Server Error"})
@@ -93,7 +90,7 @@ registerCustomerController.verifyCode = async(req, res) => {
         } = decoded
 
         if(code !== storedCode){
-            return res.status(400)-json({message: "The code doesn't match"})
+            return res.status(400).json({message: "The code doesn't match"})
         }
 
         const newCustomer = customerModel({
