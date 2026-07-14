@@ -4,11 +4,11 @@ import jsonwebtoken from "jsonwebtoken"
 import bcryptjs from "bcryptjs"
 import { config } from "../../config.js"
 
-import customerModel from "../models/customer.js"
+import adminModel from "../models/admin.js"
 
-const registerCustomerController = {};
+const registerAdminController = {};
 
-registerCustomerController.register = async(req, res) => {
+registerAdminController.register = async(req, res) => {
     try {
         const {
             name,
@@ -19,7 +19,7 @@ registerCustomerController.register = async(req, res) => {
             timeOut
         } = req.body;
 
-        const exitsCustomer = await customerModel.findOne({email})
+        const exitsCustomer = await adminModel.findOne({email})
 
         if(exitsCustomer){
             return res.status(400).json({message: "Email already exits"})
@@ -74,7 +74,7 @@ registerCustomerController.register = async(req, res) => {
     }
 }
 
-registerCustomerController.verifyCode = async(req, res) => {
+registerAdminController.verifyCode = async(req, res) => {
     try{
         const {code} = req.body;
 
@@ -96,7 +96,7 @@ registerCustomerController.verifyCode = async(req, res) => {
             return res.status(400)-json({message: "The code doesn't match"})
         }
 
-        const newCustomer = customerModel({
+        const newAdmin = adminModel({
             name,
             email,
             password,
@@ -105,7 +105,7 @@ registerCustomerController.verifyCode = async(req, res) => {
             timeOut
         });
 
-        await newCustomer.save();
+        await newAdmin.save();
 
         res.clearCookie("registrationCookie")
 
@@ -116,4 +116,4 @@ registerCustomerController.verifyCode = async(req, res) => {
     }
 }
 
-export default registerCustomerController;
+export default registerAdminController;

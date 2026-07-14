@@ -38,8 +38,22 @@ loginCustomerController.login = async (req, res) => {
             return res.status(401).json({message: "error"})
         }
 
-        
+        customerFound.loginAttempts = 0;
+        customerFound.timeOut = null;
+
+        const token = jsonwebtoken.sign(
+            {id: customerFound._id, userType: "customer"},
+            config.JWT.secret,
+            {expiresIn: "30d"}
+        )
+
+        res.cookie("authCookie", token);
+
+        return res.status(200).json({message: "Login exitoso"})
     } catch (error) {
-        
+        console.log("error"+error)
+        return res.status(500).json({message: "Internal Server Error"})
     }
 }
+
+export default loginCustomerController;

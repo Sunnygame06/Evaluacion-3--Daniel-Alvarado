@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-mongoose.connect("mongodb://loalhost:27017/TodoTicket2B")
+mongoose.connect("mongodb://localhost:27017/TodoTicket2B")
 
 const connection = mongoose.connection;
 
